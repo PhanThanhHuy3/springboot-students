@@ -20,8 +20,8 @@ public class StudentController {
     @GetMapping("/view")
     public String viewHomePage(Model model) {
         List<Student> list = studentRepository.findAll();
-        model.addAttribute("students", list); 
-        return "index"; 
+        model.addAttribute("students", list);
+        return "index";
     }
 
     // 2. THÊM HOẶC CẬP NHẬT (Lưu dữ liệu)
@@ -45,5 +45,23 @@ public class StudentController {
     public String deleteStudent(@PathVariable(value = "id") Integer id) {
         studentRepository.deleteById(id);
         return "redirect:/students/view"; // Xóa xong quay về trang danh sách
+    }
+
+    // 1. API lấy sinh viên theo ID (Trả về JSON)
+    // URL: http://localhost:8080/students/api/1
+    @GetMapping("/api/{id}")
+    @ResponseBody
+    public Student getStudentApi(@PathVariable Integer id) {
+        return studentRepository.findById(id).orElse(null);
+    }
+
+    // 2. Chức năng tìm kiếm trên giao diện
+    // URL: http://localhost:8080/students/search?keyword=...
+    @GetMapping("/search")
+    public String searchStudents(@RequestParam("keyword") String keyword, Model model) {
+        List<Student> list = studentRepository.findByNameContainingIgnoreCase(keyword);
+        model.addAttribute("students", list);
+        model.addAttribute("keyword", keyword); // Để giữ lại chữ trong ô tìm kiếm
+        return "index";
     }
 }
