@@ -12,7 +12,7 @@ public class Student {
     @Id // Đánh dấu đây là khóa chính (Primary Key)
     private Integer id;
 
-    @Column(name = "name") // Ánh xạ với cột 'name'
+    @Column(name = "name", columnDefinition = "NVARCHAR(255)") // Ánh xạ với cột 'name'
     private String name;
 
     @Column(name = "age")
