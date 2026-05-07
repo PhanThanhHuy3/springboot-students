@@ -17,6 +17,11 @@
                         <input type="hidden" th:field="*{id}">
                         
                         <div class="mb-3">
+                            <label class="form-label">ID hiện tại (UUID):</label>
+                            <input type="text" th:value="*{id}" class="form-control" disabled>
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label">Họ tên:</label>
                             <input type="text" th:field="*{name}" class="form-control" required>
                         </div>

@@ -1,18 +1,20 @@
-package com.example.demo1.model; // Thay đổi theo package của bạn
+package com.example.demo1.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.UUID;
 
 @Entity 
-@Table(name = "students") // Tên bảng trong SQL Server
+@Table(name = "students")
 public class Student {
 
-    @Id // Đánh dấu đây là khóa chính (Primary Key)
-    private Integer id;
+    @Id 
+    @Column(name = "id", length = 36) // UUID chuẩn có độ dài 36 ký tự
+    private String id;
 
-    @Column(name = "name", columnDefinition = "NVARCHAR(255)") // Ánh xạ với cột 'name'
+    @Column(name = "name", columnDefinition = "NVARCHAR(255)")
     private String name;
 
     @Column(name = "age")
@@ -21,20 +23,21 @@ public class Student {
     @Column(name = "email")
     private String email;
 
-    // --- CONSTRUCTOR (Hàm khởi tạo) ---
+    // Constructor mặc định: Tự động sinh UUID khi tạo đối tượng mới
     public Student() {
+        this.id = UUID.randomUUID().toString();
     }
 
-    public Student(Integer id, String name, Integer age, String email) {
+    public Student(String id, String name, Integer age, String email) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.email = email;
     }
 
-    // --- GETTERS AND SETTERS (Để truy xuất dữ liệu) ---
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    // --- GETTERS AND SETTERS ---
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

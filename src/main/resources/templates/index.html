@@ -10,12 +10,12 @@
 <body class="container mt-5">
     <div class="card shadow">
         <div class="card-header bg-primary text-white">
-            <h3 class="mb-0">QUẢN LÝ SINH VIÊN</h3>
+            <h3 class="mb-0">QUẢN LÝ SINH VIÊN (UUID)</h3>
         </div>
         <div class="card-body">
             <form th:action="@{/students/save}" method="post" class="row g-3 mb-4">
-                <div class="col-md-2">
-                    <input type="number" name="id" class="form-control" placeholder="ID" required>
+                <div class="col-md-3">
+                    <input type="text" name="id" class="form-control" placeholder="ID (Tự động tạo)" readonly>
                 </div>
                 <div class="col-md-3">
                     <input type="text" name="name" class="form-control" placeholder="Họ tên" required>
@@ -23,7 +23,7 @@
                 <div class="col-md-2">
                     <input type="number" name="age" class="form-control" placeholder="Tuổi" required>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <input type="email" name="email" class="form-control" placeholder="Email" required>
                 </div>
                 <div class="col-md-2">
@@ -31,10 +31,10 @@
                 </div>
             </form>
 
-            <table class="table table-hover table-bordered">
-                <thead class="table-dark">
+            <table class="table table-bordered table-hover">
+                <thead class="table-light">
                     <tr>
-                        <th>ID</th>
+                        <th>ID (UUID)</th>
                         <th>Họ tên</th>
                         <th>Tuổi</th>
                         <th>Email</th>
@@ -43,18 +43,19 @@
                 </thead>
                 <tbody>
                     <tr th:each="s : ${students}">
-                        <td th:text="${s.id}"></td>
+                        <td th:text="${s.id}" style="font-size: 0.85rem; color: #666;"></td>
                         <td th:text="${s.name}"></td>
                         <td th:text="${s.age}"></td>
                         <td th:text="${s.email}"></td>
                         <td>
                             <a th:href="@{/students/edit/{id}(id=${s.id})}" class="btn btn-primary btn-sm">Sửa</a>
                             <a th:href="@{/students/delete/{id}(id=${s.id})}" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+                                onclick="return confirm('Bạn có chắc muốn xóa sinh viên này?')">Xóa</a>
                         </td>
                     </tr>
                 </tbody>
             </table>
+
             <form th:action="@{/students/search}" method="get" class="row g-3 mb-3">
                 <div class="col-md-10">
                     <input type="text" name="keyword" th:value="${keyword}" class="form-control"
@@ -66,10 +67,9 @@
             </form>
 
             <div th:if="${#lists.isEmpty(students)}" class="alert alert-warning">
-                Không tìm thấy sinh viên nào với tên này!
+                Không tìm thấy sinh viên nào!
             </div>
         </div>
     </div>
 </body>
-
 </html>
